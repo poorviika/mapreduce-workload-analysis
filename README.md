@@ -1,6 +1,6 @@
 Performance Evaluation of Hadoop MapReduce Workloads in Containerized and Virtual Machine Environments
 
-1. Introduction
+1. Overview
 
 This initiative undertakes an examination of Hadoop MapReduce workload performance across two distinct operational settings:
 
