@@ -4,7 +4,7 @@ Performance Evaluation of Hadoop MapReduce Workloads in Containerized and Virtua
 
 This initiative undertakes an examination of Hadoop MapReduce workload performance across two distinct operational settings:
 
-  A containerized framework leveraging Docker technology
+  A containerized framework leveraging Docker technology,
   A virtualized infrastructure employing a Virtual Machine
 
 The primary aim of this analysis is to ascertain the differentials in execution time, CPU utilization, and memory consumption when operating within these contrasting 
