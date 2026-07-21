@@ -11,15 +11,6 @@ This repository compares Hadoop MapReduce performance across two execution envir
 
 The benchmark suite uses standard Hadoop examples: `TeraGen`, `TeraSort`, and `TeraValidate`.
 
-## Why this matters
-
-Recruiters and hiring managers should see this project demonstrates:
-
-- real performance benchmarking of distributed workloads
-- infrastructure comparison (container vs VM)
-- automation using Python
-- Hadoop and HDFS operational knowledge
-
 ## Repository contents
 
 - `docker-compose.yml` — Hadoop cluster definitions for Docker
@@ -104,13 +95,3 @@ The benchmark scripts generate:
 - Lower average CPU% can indicate underutilization or more efficient execution
 - Memory trends show whether the workload is stable or spiking between runs
 
-## Improvements made in this version
-
-- Added reproducible README and execution steps
-- Parameterized VM script for portable execution
-- Added dependency declarations
-- Added clearly named output files and results directories
-
-## Notes for recruiters
-
-This project is a solid demonstration of systems engineering and data infrastructure analysis. It shows both hands-on Hadoop operation and practical performance measurement, which is valuable for roles in data engineering, big data, and infrastructure automation.
