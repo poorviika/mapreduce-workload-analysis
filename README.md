@@ -1,131 +1,116 @@
-Performance Evaluation of Hadoop MapReduce Workloads in Containerized and Virtual Machine Environments
+# MapReduce Workload Analysis
 
-1. Overview
+Performance evaluation of Hadoop MapReduce workloads in Docker container and VM environments.
 
-This initiative undertakes an examination of Hadoop MapReduce workload performance across two distinct operational settings:
+## Project overview
 
-   A containerized framework leveraging Docker technology 
-   A virtualized infrastructure employing a Virtual Machine
-   
-The primary aim of this analysis is to ascertain the differentials in execution time, CPU utilization, and memory consumption when operating within these contrasting 
-environments.
+This repository compares Hadoop MapReduce performance across two execution environments:
 
-2. Experimental Setup
+- Docker containerized cluster using Docker Compose
+- Local virtual machine environment using a standalone Hadoop installation
 
-The experimental design ensured comparable conditions across both environments. Specifically, each environment was provisioned with analogous system resources, and to preclude 
-any potential operational interference, only one setup was active at any given moment. For a rigorous comparative analysis, consistent MapReduce workloads were employed 
-throughout the evaluations.
+The benchmark suite uses standard Hadoop examples: `TeraGen`, `TeraSort`, and `TeraValidate`.
 
-Regarding deployment specifics, the containerized configuration facilitated Hadoop's orchestration through Docker Compose. Conversely, within the virtual machine environment, 
-the Hadoop services necessitated manual initialization and ongoing management.
+## Why this matters
 
-3. System Architecture
+Recruiters and hiring managers should see this project demonstrates:
 
-The implemented Hadoop cluster incorporates several core components, each fulfilling a specific function:
+- real performance benchmarking of distributed workloads
+- infrastructure comparison (container vs VM)
+- automation using Python
+- Hadoop and HDFS operational knowledge
 
-  NameNode – responsible for the management of file system metadata
-  DataNode – tasked with the storage of data blocks
-  ResourceManager – facilitates the scheduling of jobs across the cluster
-  NodeManager – designated for the execution of individual tasks
-  HistoryServer – maintains a record of completed job histories
+## Repository contents
 
-4. Execution Procedure
+- `docker-compose.yml` — Hadoop cluster definitions for Docker
+- `hadoop.env` — environment config for the Docker cluster
+- `hadoop_benchmark_docker.py` — automated Docker benchmark script
+- `hadoop_benchmark_vm.py` — automated VM benchmark script
+- `docker_results/` — saved Docker benchmark graphs
+- `vm_results/` — saved VM benchmark graphs
 
-4.1 Docker Environment
+## Prerequisites
 
-Cluster initialization:
+1. Docker Engine
+2. Docker Compose
+3. Python 3.8+
+4. Local Hadoop installation for VM benchmarking
 
+Install Python dependencies:
+
+```bash
+python3 -m pip install -r requirements.txt
+```
+
+## Docker benchmark instructions
+
+### Start the Hadoop Docker cluster
+
+```bash
 docker-compose up -d
+```
 
-Verification of container status:
+### Confirm the cluster is running
 
+```bash
 docker ps
+```
 
-Web interface access points:
+### Run the Docker benchmark
 
-  NameNode → http://localhost:9870
-  ResourceManager → http://localhost:8088
+```bash
+python3 hadoop_benchmark_docker.py
+```
 
-Execution of MapReduce workloads:
+### Expected output
 
-docker exec -it namenode bash
+- `docker_results/benchmark_results_docker.txt`
+- `docker_results/docker_benchmark.png`
 
-hadoop jar ... teragen 10000 /input
-hadoop jar ... terasort /input /output
-hadoop jar ... teravalidate /output /validate
+### Default Docker benchmark settings
 
-4.2 Virtual Machine Environment
+- Iterations: 5
+- TeraGen data size: 1,000,000,000 rows
+- HDFS path: `/user/hadoop`
+- Container name: `namenode`
 
-Hadoop service activation:
+## VM benchmark instructions
 
-start-all.sh
+Update the local JAR path and run the VM benchmark with:
 
-Process verification:
+```bash
+python3 hadoop_benchmark_vm.py --hadoop-jar-path /path/to/hadoop-mapreduce-examples-3.2.1.jar
+```
 
-jps
+### Expected output
 
-Execution of MapReduce workloads:
+- `vm_results/vm_results.txt`
+- `vm_results/vm_TeraGen.png`
+- `vm_results/vm_TeraSort.png`
+- `vm_results/vm_TeraValidate.png`
 
-hadoop jar ... teragen 10000 /input
-hadoop jar ... terasort /input /output
-hadoop jar ... teravalidate /output /validate
+## What to expect from the benchmarks
 
-5. Automated Execution
+The benchmark scripts generate:
 
-To ensure consistency and efficiency in workload management, a custom Python script was developed for automated execution.
+- execution time per iteration
+- average CPU utilization
+- memory usage metrics
+- graphical visualizations of trends across iterations
 
-This script is engineered to carry out several key functions:
+## How to interpret the results
 
-  Systematic execution of the TeraGen, TeraSort, and TeraValidate benchmark suite
-  Completion of multiple iterative runs to gather comprehensive data
-  Precise measurement of critical performance metrics, including execution time, CPU utilization, and memory consumption
-  Automated generation of graphical representations for the collected results
+- Lower execution time means better throughput
+- Lower average CPU% can indicate underutilization or more efficient execution
+- Memory trends show whether the workload is stable or spiking between runs
 
-To initiate the automation process, execute:
+## Improvements made in this version
 
-python3 hadoop_benchmark.py
+- Added reproducible README and execution steps
+- Parameterized VM script for portable execution
+- Added dependency declarations
+- Added clearly named output files and results directories
 
-6. Performance Metrics Monitored
+## Notes for recruiters
 
-The evaluation focused on the collection and analysis of the following key performance indicators:
-
-  Execution Time
-  CPU Utilization
-  Memory Consumption
-
-7. Results Documentation
-
-Benchmark results and corresponding visualizations are included in the repository.
-They demonstrate the performance differences between containerized and virtualized environments under identical workloads.
-
-8. Principal Observations
-
-Analysis of the collected data revealed several critical distinctions between the environments:
-
-  Containerized environments consistently demonstrated superior execution speeds.
-  The operation within virtual machines was associated with discernible additional overhead.
-  Overall, containers exhibited enhanced efficiency for the specific MapReduce workload under investigation.
-
-9. Technological Framework
-
-The implementation and analysis of this project relied upon the following key technologies:
-
-  Docker and Docker Compose, for containerization and orchestration
-  Apache Hadoop, as the distributed computing framework
-  Python, utilized for both workload automation and data visualization
-  Virtual Machine platforms, specifically VirtualBox or UTM, for the virtualized environment
-
-10. Concluding Remarks
-
-This investigation successfully illustrated the tangible performance disparities inherent between containerized and virtualized infrastructures when executing Hadoop 
-workloads. The findings indicate that containers generally afford superior performance and operational efficiency. Conversely, virtual machines retain an advantage in 
-providing a more robust level of isolation.
-
-11. Recommendations for Further Research
-
-Building upon the insights gained from this study, several avenues for future work are identified to broaden the scope and depth of analysis:
-
-  Implementation of multi-node cluster configurations for more distributed testing
-  Evaluation with significantly larger datasets to assess scalability
-  Expansion of testing to cloud-based environments, such as AWS or GCP
-  Integration with advanced monitoring and observability tools for enhanced data collection
+This project is a solid demonstration of systems engineering and data infrastructure analysis. It shows both hands-on Hadoop operation and practical performance measurement, which is valuable for roles in data engineering, big data, and infrastructure automation.
