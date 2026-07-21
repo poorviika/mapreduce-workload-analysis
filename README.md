@@ -33,6 +33,23 @@ Install Python dependencies:
 python3 -m pip install -r requirements.txt
 ```
 
+Or use the provided Makefile:
+
+```bash
+make install
+```
+
+## Makefile commands
+
+Use these make commands to run the benchmark and manage the cluster:
+
+```bash
+make up           # start Docker Hadoop cluster
+make down         # stop Docker Hadoop cluster
+make bench-docker # run Docker benchmark
+make bench-vm     # run VM benchmark (requires HADOOP_JAR_PATH)
+```
+
 ## Docker benchmark instructions
 
 ### Start the Hadoop Docker cluster
